@@ -67,3 +67,492 @@ $bybit->setOptions([
 ]);
 ```
 
+#### USDT Perpetual
+
+Market Data API [More](https://github.com/zhouaini528/bybit-php/blob/master/tests/linear/publics.php)
+```php
+$bybit=new BybitLinear();
+
+try {
+    $result=$bybit->publics()->getOrderBookL2([
+        'symbol'=>'BTCUSDT'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->publics()->getKline([
+        'symbol'=>'BTCUSDT',
+        'interval'=>'15',
+        'from'=>time()-3600,
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->publics()->getTickers();
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->publics()->getRecentTradingRecords([
+        'symbol'=>'BTCUSDT',
+        'limit'=>'5',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->publics()->getSymbols();
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+```
+
+Place Active Order API [More](https://github.com/zhouaini528/bybit-php/blob/master/tests/linear/order.php)
+```php
+$bybit=new BybitLinear($key,$secret);
+
+try {
+    $result=$bybit->privates()->postOrderCreate([
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'side'=>'Buy',
+        'symbol'=>'BTCUSDT',
+        'order_type'=>'Limit',
+        'qty'=>'1',
+        'price'=>'4000',
+        'time_in_force'=>'GoodTillCancel',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getOrderSearch([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSDT',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postOrderReplace([
+        'order_id'=>'xxxxxxxxxxxxx',
+        'symbol'=>'BTCUSDT',
+        'p_r_qty'=>'2',
+        'p_r_price'=>'4999'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postOrderCancel([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSDT',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getOrderList([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSDT',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+```
+
+Place Conditional Order API [More](https://github.com/zhouaini528/bybit-php/blob/master/tests/linear/stoporder.php)
+```php
+$bybit=new BybitLinear($key,$secret);
+
+try {
+    $result=$bybit->privates()->postStopOrderCreate([
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'side'=>'Buy',
+        'symbol'=>'BTCUSDT',
+        'order_type'=>'Limit',
+        'qty'=>'1',
+        'price'=>'4000',
+        'time_in_force'=>'GoodTillCancel',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getStopOrderSearch([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSDT',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postStopOrderReplace([
+        'order_id'=>'xxxxxxxxxxxxx',
+        'symbol'=>'BTCUSDT',
+        'p_r_qty'=>'2',
+        'p_r_price'=>'4999'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postStopOrderCancel([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSDT',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getStopOrderList([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSDT',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+```
+
+My Position API [More](https://github.com/zhouaini528/bybit-php/blob/master/tests/linear/position.php)
+```php
+$bybit=new BybitLinear($key,$secret);
+
+try {
+    $result=$bybit->privates()->getPositionList([
+        'symbol'=>'BTCUSDT',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postChangePositionMargin([
+        'symbol'=>'BTCUSDT',
+        'margin'=>'1'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postPositionTradingStop([
+        'symbol'=>'BTCUSDT',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getUserLeverage();
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postUserLeverageSave([
+        'symbol'=>'BTCUSDT',
+        'leverage'=>'1'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getExecutionList([
+        'symbol'=>'BTCUSDT',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+```
+
+[More Test](https://github.com/zhouaini528/bybit-php/tree/master/tests/linear)
+
+[More API](https://github.com/zhouaini528/bybit-php/tree/master/src/Api/Linear)
+
+#### Inverse Perpetual
+
+Market data API [More](https://github.com/zhouaini528/bybit-php/blob/master/tests/inverse/publics.php)
+```php
+$bybit=new BybitInverse();
+
+try {
+    $result=$bybit->publics()->getOrderBookL2([
+        'symbol'=>'BTCUSD'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->publics()->getKlineList([
+        'symbol'=>'BTCUSD',
+        'interval'=>'15',
+        'from'=>time()-3600,
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->publics()->getTickers();
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->publics()->getTradingRecords([
+        'symbol'=>'BTCUSD',
+        'limit'=>'5',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->publics()->getSymbols();
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+```
+
+Place Active Order API [More](https://github.com/zhouaini528/bybit-php/blob/master/tests/inverse/order.php)
+```php
+$bybit=new BybitInverse($key,$secret);
+
+try {
+    $result=$bybit->privates()->postOrderCreate([
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'side'=>'Buy',
+        'symbol'=>'BTCUSD',
+        'order_type'=>'Limit',
+        'qty'=>'1',
+        'price'=>'4000',
+        'time_in_force'=>'GoodTillCancel',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getOrder([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postOrderReplace([
+        'order_id'=>'xxxxxxxxxxxxx',
+        'symbol'=>'BTCUSD',
+        'p_r_qty'=>'2',
+        'p_r_price'=>'4999'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postOrderCancel([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getOrderList([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+```
+
+Place Conditional Order API [More](https://github.com/zhouaini528/bybit-php/blob/master/tests/inverse/stoporder.php)
+```php
+$bybit=new BybitInverse($key,$secret);
+
+try {
+    $result=$bybit->privates()->postStopOrderCreate([
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'side'=>'Buy',
+        'symbol'=>'BTCUSD',
+        'order_type'=>'Limit',
+        'qty'=>'1',
+        'price'=>'4000',
+        'time_in_force'=>'GoodTillCancel',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getStopOrder([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postStopOrderReplace([
+        'order_id'=>'xxxxxxxxxxxxx',
+        'symbol'=>'BTCUSD',
+        'p_r_qty'=>'2',
+        'p_r_price'=>'4999'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postStopOrderCancel([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getStopOrderList([
+        'order_id'=>'xxxxxxxxxxxxx',
+        //'order_link_id'=>'xxxxxxxxxxxxxx',
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+```
+
+My Position Api [More](https://github.com/zhouaini528/bybit-php/blob/master/tests/inverse/position.php)
+```php
+$bybit=new BybitInverse($key,$secret);
+
+try {
+    $result=$bybit->privates()->getPositionList([
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postChangePositionMargin([
+        'symbol'=>'BTCUSD',
+        'margin'=>'1'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postPositionTradingStop([
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getUserLeverage();
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->postUserLeverageSave([
+        'symbol'=>'BTCUSD',
+        'leverage'=>'1'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getExecutionList([
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+```
+
+[More Test](https://github.com/zhouaini528/bybit-php/tree/master/tests/inverse)
+
+[More API](https://github.com/zhouaini528/bybit-php/tree/master/src/Api/Inverse)
+
