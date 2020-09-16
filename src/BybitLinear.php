@@ -5,9 +5,8 @@
 
 namespace Lin\Bybit;
 
-use Lin\Bybit\Api\Account;
-use Lin\Bybit\Api\Market;
-use Lin\Bybit\Api\Publics;
+use Lin\Bybit\Api\Linear\Privates;
+use Lin\Bybit\Api\Linear\Publics;
 
 class BybitLinear
 {
@@ -45,21 +44,14 @@ class BybitLinear
     /**
      *
      * */
-    public function account(){
-        return  new Account($this->init());
+    public function privates(){
+        return  new Privates($this->init());
     }
 
     /**
      *
      * */
-    public function market(){
-        return  new Market($this->init());
-    }
-
-    /**
-     *
-     * */
-    public function trading(){
+    public function publics(){
         return  new Publics($this->init());
     }
 }

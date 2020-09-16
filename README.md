@@ -40,20 +40,22 @@ All interface methods are initialized the same as those provided by Bybit. See d
 
 #### Installation
 ```
-composer require linwj/crex24
+composer require linwj/bybit
 ```
 
 Support for more request Settings
 ```php
-$crex=new Crex();
+$bybit=new BybitLinear();
+//or new
+//$bybit=new BybitInverse();
 
 //You can set special needs
-$crex->setOptions([
+$bybit->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
     
     //If you are developing locally and need an agent, you can set this
-    'proxy'=>true,
+    //'proxy'=>true,
     //More flexible Settings
     /* 'proxy'=>[
      'http'  => 'http://127.0.0.1:12333',
