@@ -2,16 +2,16 @@
 /**
  * @author lin <465382251@qq.com>
  * */
-use \Lin\Crex\BybitInverse;
+use \Lin\Bybit\BybitInverse;
 
-require __DIR__ .'../../vendor/autoload.php';
+require __DIR__ .'../../../vendor/autoload.php';
 
 include 'key_secret.php';
 
-$crex=new BybitInverse($key,$secret);
+$bybit=new BybitInverse($key,$secret);
 
 //You can set special needs
-$crex->setOptions([
+$bybit->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
 
@@ -27,9 +27,17 @@ $crex->setOptions([
     //'verify'=>false,
 ]);
 
+
 try {
-    $result=$crex->account()->getBalance([
-        //'currency'=>'FREE'
+    $result=$bybit->privates()->getWalletBalance();
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->privates()->getFundingPrev([
+        'symbol'=>'BTCUSD',
     ]);
     print_r($result);
 }catch (\Exception $e){
@@ -37,8 +45,8 @@ try {
 }
 
 try {
-    $result=$crex->account()->getDepositAddress([
-        'currency'=>'BTC'
+    $result=$bybit->privates()->getFundingPredicted([
+        'symbol'=>'BTCUSD',
     ]);
     print_r($result);
 }catch (\Exception $e){
@@ -46,16 +54,9 @@ try {
 }
 
 try {
-    $result=$crex->account()->getDepositAddress([
-        'currency'=>'BTC'
+    $result=$bybit->privates()->getFundingPrevRate([
+        'symbol'=>'BTCUSD',
     ]);
-    print_r($result);
-}catch (\Exception $e){
-    print_r($e->getMessage());
-}
-
-try {
-    $result=$crex->account()->getMoneyTransfers();
     print_r($result);
 }catch (\Exception $e){
     print_r($e->getMessage());

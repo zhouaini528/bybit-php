@@ -3,11 +3,11 @@
  * @author lin <465382251@qq.com>
  * */
 
-namespace Lin\Crex;
+namespace Lin\Bybit;
 
-use Lin\Crex\Api\Account;
-use Lin\Crex\Api\Market;
-use Lin\Crex\Api\Trading;
+
+use Lin\Bybit\Api\Inverse\Privates;
+use Lin\Bybit\Api\Inverse\Publics;
 
 class BybitInverse
 {
@@ -17,7 +17,7 @@ class BybitInverse
 
     protected $options=[];
 
-    function __construct(string $key='',string $secret='',string $host='https://api.crex24.com'){
+    function __construct(string $key='',string $secret='',string $host='https://api.bybit.com'){
         $this->key=$key;
         $this->secret=$secret;
         $this->host=$host;
@@ -45,21 +45,14 @@ class BybitInverse
     /**
      *
      * */
-    public function account(){
-        return  new Account($this->init());
+    public function privates(){
+        return  new Privates($this->init());
     }
 
     /**
      *
      * */
-    public function market(){
-        return  new Market($this->init());
-    }
-
-    /**
-     *
-     * */
-    public function trading(){
-        return  new Trading($this->init());
+    public function publics(){
+        return  new Publics($this->init());
     }
 }

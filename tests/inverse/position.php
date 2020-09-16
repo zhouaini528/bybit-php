@@ -2,15 +2,16 @@
 /**
  * @author lin <465382251@qq.com>
  * */
+use \Lin\Bybit\BybitInverse;
 
-use Lin\Crex\BybitInverse;
+require __DIR__ .'../../../vendor/autoload.php';
 
-require __DIR__ .'../../vendor/autoload.php';
+include 'key_secret.php';
 
-$crex=new BybitInverse();
+$bybit=new BybitInverse($key,$secret);
 
 //You can set special needs
-$crex->setOptions([
+$bybit->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
 
@@ -28,29 +29,8 @@ $crex->setOptions([
 
 
 try {
-    $result=$crex->market()->getCurrencies();
-    print_r($result);
-}catch (\Exception $e){
-    print_r($e->getMessage());
-}
-
-try {
-    $result=$crex->market()->getInstruments();
-    print_r($result);
-}catch (\Exception $e){
-    print_r($e->getMessage());
-}
-
-try {
-    $result=$crex->market()->getTickers();
-    print_r($result);
-}catch (\Exception $e){
-    print_r($e->getMessage());
-}
-
-try {
-    $result=$crex->market()->getRecentTrades([
-        'instrument'=>'LTC-BTC'
+    $result=$bybit->privates()->getPositionList([
+        'symbol'=>'BTCUSD',
     ]);
     print_r($result);
 }catch (\Exception $e){
@@ -58,9 +38,9 @@ try {
 }
 
 try {
-    $result=$crex->market()->getOrderBook([
-        'instrument'=>'LTC-BTC',
-        'limit'=>10
+    $result=$bybit->privates()->postChangePositionMargin([
+        'symbol'=>'BTCUSD',
+        'margin'=>'1'
     ]);
     print_r($result);
 }catch (\Exception $e){
@@ -68,9 +48,8 @@ try {
 }
 
 try {
-    $result=$crex->market()->getOhlcv([
-        'instrument'=>'LTC-BTC',
-        'granularity'=>'30m'
+    $result=$bybit->privates()->postPositionTradingStop([
+        'symbol'=>'BTCUSD',
     ]);
     print_r($result);
 }catch (\Exception $e){
@@ -78,19 +57,27 @@ try {
 }
 
 try {
-    $result=$crex->market()->getTradingFeeSchedules();
+    $result=$bybit->privates()->getUserLeverage();
     print_r($result);
 }catch (\Exception $e){
     print_r($e->getMessage());
 }
 
 try {
-    $result=$crex->market()->getWithdrawalFees([
-        'currency'=>'LTC'
+    $result=$bybit->privates()->postUserLeverageSave([
+        'symbol'=>'BTCUSD',
+        'leverage'=>'1'
     ]);
     print_r($result);
 }catch (\Exception $e){
     print_r($e->getMessage());
 }
 
-
+try {
+    $result=$bybit->privates()->getExecutionList([
+        'symbol'=>'BTCUSD',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}

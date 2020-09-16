@@ -3,10 +3,10 @@
  * @author lin <465382251@qq.com>
  * */
 
-namespace Lin\Crex;
+namespace Lin\Bybit;
 
 use GuzzleHttp\Exception\RequestException;
-use Lin\Crex\Exceptions\Exception;
+use Lin\Bybit\Exceptions\Exception;
 
 class Request
 {
@@ -36,7 +36,7 @@ class Request
     {
         $this->key=$data['key'] ?? '';
         $this->secret=$data['secret'] ?? '';
-        $this->host=$data['host'] ?? 'https://api.crex24.com';
+        $this->host=$data['host'] ?? 'https://api.bybit.com';
 
         $this->options=$data['options'] ?? [];
     }
@@ -65,13 +65,13 @@ class Request
      *
      * */
     protected function signature(){
-        $message=$this->path;
-        if($this->type=='GET') $message.= empty($this->data) ? '' : '?'.http_build_query($this->data);
-        $message .= $this->nonce;
+        if(!empty($this->key) && !empty($this->secret)){
+            $this->data['api_key']=$this->key;
+            $this->data['timestamp']=$this->nonce;
 
-        if($this->type=='POST' && !empty($this->data)) $message .= json_encode($this->data);
-
-        $this->signature = base64_encode(hash_hmac('sha512', $message , base64_decode($this->secret) , true));
+            ksort($this->data);
+            $this->signature = hash_hmac('sha256', urldecode(http_build_query($this->data)), $this->secret);
+        }
     }
 
     /*
@@ -80,9 +80,6 @@ class Request
     protected function headers(){
         $this->headers=[
             'Content-Type' => 'application/json',
-            'X-CREX24-API-KEY' => $this->key,
-            'X-CREX24-API-NONCE' => $this->nonce,
-            'X-CREX24-API-SIGN' => $this->signature
         ];
     }
 
@@ -111,13 +108,11 @@ class Request
      * */
     protected function send(){
         $client = new \GuzzleHttp\Client();
-
         $url=$this->host.$this->path;
 
-        if($this->type=='GET') $url.= empty($this->data) ? '' : '?'.http_build_query($this->data);
-        else $this->options['body']=json_encode($this->data);
-        /*echo $url.PHP_EOL;
-        print_r($this->options);*/
+        if($this->type=='GET') $url.= '?'.http_build_query($this->data).($this->signature!=''?'&sign='.$this->signature:'');
+        else $this->options['body']=json_encode(array_merge($this->data,['sign'=>$this->signature]));
+
         $response = $client->request($this->type, $url, $this->options);
 
         return $response->getBody()->getContents();

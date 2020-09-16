@@ -2,16 +2,16 @@
 /**
  * @author lin <465382251@qq.com>
  * */
-use \Lin\Crex\BybitInverse;
+use \Lin\Bybit\BybitInverse;
 
-require __DIR__ .'../../vendor/autoload.php';
+require __DIR__ .'../../../vendor/autoload.php';
 
 include 'key_secret.php';
 
-$crex=new BybitInverse($key,$secret);
+$bybit=new BybitInverse();
 
 //You can set special needs
-$crex->setOptions([
+$bybit->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
 
@@ -28,12 +28,8 @@ $crex->setOptions([
 ]);
 
 try {
-    $result=$crex->trading()->postPlaceOrder([
-        'instrument'=>'ETH-BTC',
-        'side'=>'buy',
-        'type'=>'limit',
-        'volume'=>'100',
-        'price'=>'0.01',
+    $result=$bybit->publics()->getOrderBookL2([
+        'symbol'=>'BTCUSD'
     ]);
     print_r($result);
 }catch (\Exception $e){
@@ -41,8 +37,10 @@ try {
 }
 
 try {
-    $result=$crex->trading()->getOrderStatus([
-        'id'=>'xxxxxxxxxx'
+    $result=$bybit->publics()->getKlineList([
+        'symbol'=>'BTCUSD',
+        'interval'=>'15',
+        'from'=>time()-3600,
     ]);
     print_r($result);
 }catch (\Exception $e){
@@ -50,8 +48,16 @@ try {
 }
 
 try {
-    $result=$crex->trading()->getOrderTrades([
-        'id'=>'xxxxxxxxxx'
+    $result=$bybit->publics()->getTickers();
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->publics()->getTradingRecords([
+        'symbol'=>'BTCUSD',
+        'limit'=>'5',
     ]);
     print_r($result);
 }catch (\Exception $e){
@@ -59,24 +65,7 @@ try {
 }
 
 try {
-    $result=$crex->trading()->postCancelOrdersById([
-        //'id'=>'xxxxxxxxxx'
-        'id'=>['111111','22222222']
-    ]);
-    print_r($result);
-}catch (\Exception $e){
-    print_r($e->getMessage());
-}
-
-try {
-    $result=$crex->trading()->getOrderHistory();
-    print_r($result);
-}catch (\Exception $e){
-    print_r($e->getMessage());
-}
-
-try {
-    $result=$crex->trading()->getTradeHistory();
+    $result=$bybit->publics()->getSymbols();
     print_r($result);
 }catch (\Exception $e){
     print_r($e->getMessage());
