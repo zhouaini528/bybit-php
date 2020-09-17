@@ -37,7 +37,7 @@ try {
     print_r($e->getMessage());
 }
 
-try {
+/*try {
     $result=$bybit->privates()->postChangePositionMargin([
         'symbol'=>'BTCUSDT',
         'margin'=>'1'
@@ -45,7 +45,7 @@ try {
     print_r($result);
 }catch (\Exception $e){
     print_r($e->getMessage());
-}
+}*/
 
 try {
     $result=$bybit->privates()->postPositionTradingStop([
@@ -56,7 +56,7 @@ try {
     print_r($e->getMessage());
 }
 
-try {
+/*try {
     $result=$bybit->privates()->getUserLeverage();
     print_r($result);
 }catch (\Exception $e){
@@ -71,13 +71,13 @@ try {
     print_r($result);
 }catch (\Exception $e){
     print_r($e->getMessage());
-}
+}*/
 
-try {
+/*try {
     $result=$bybit->privates()->getExecutionList([
         'symbol'=>'BTCUSDT',
     ]);
     print_r($result);
 }catch (\Exception $e){
     print_r($e->getMessage());
-}
+}*/
