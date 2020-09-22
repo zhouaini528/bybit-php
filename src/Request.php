@@ -87,11 +87,9 @@ class Request
      *
      * */
     protected function options(){
-        $this->options=array_merge([
-            'headers'=>$this->headers,
-            //'verify'=>false
-        ],$this->options);
+        if(isset($this->options['headers'])) $this->headers=array_merge($this->headers,$this->options['headers']);
 
+        $this->options['headers']=$this->headers;
         $this->options['timeout'] = $this->options['timeout'] ?? 60;
 
         if(isset($this->options['proxy']) && $this->options['proxy']===true) {
