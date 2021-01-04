@@ -27,21 +27,27 @@ $bybit->setOptions([
     //'verify'=>false,
 ]);
 
-
 try {
     $result=$bybit->privates()->postOrderCreate([
         //'order_link_id'=>'xxxxxxxxxxxxxx',
-        'side'=>'Buy',
+        'side'=>'Sell',
         'symbol'=>'BTCUSDT',
         'order_type'=>'Limit',
-        'qty'=>'1',
-        'price'=>'4000',
+        'qty'=>'0.25',
+        'price'=>'40000',
         'time_in_force'=>'GoodTillCancel',
+
+        'reduce_only'=>'false',
+        'close_on_trigger'=>'false',
+        //or set
+        'reduce_only'=>false,
+        'close_on_trigger'=>false
     ]);
     print_r($result);
 }catch (\Exception $e){
     print_r($e->getMessage());
 }
+
 
 try {
     $result=$bybit->privates()->getOrderSearch([

@@ -70,7 +70,11 @@ class Request
             $this->data['timestamp']=$this->nonce;
 
             ksort($this->data);
-            $this->signature = hash_hmac('sha256', urldecode(http_build_query($this->data)), $this->secret);
+
+            $temp=$this->data;
+            foreach ($temp as $k=>$v) if(is_bool($v)) $temp[$k]=$v?'true':'false';
+
+            $this->signature = hash_hmac('sha256', urldecode(http_build_query($temp)), $this->secret);
         }
     }
 
@@ -109,7 +113,16 @@ class Request
         $url=$this->host.$this->path;
 
         if($this->type=='GET') $url.= '?'.http_build_query($this->data).($this->signature!=''?'&sign='.$this->signature:'');
-        else $this->options['body']=json_encode(array_merge($this->data,['sign'=>$this->signature]));
+        else {
+            $temp=$this->data;
+
+            foreach ($temp as $k=>$v){
+                if($v=='true') $temp[$k]=true;
+                if($v=='false') $temp[$k]=false;
+            }
+
+            $this->options['body']=json_encode(array_merge($temp,['sign'=>$this->signature]));
+        }
 
         $response = $client->request($this->type, $url, $this->options);
 
