@@ -131,6 +131,9 @@ try {
         'qty'=>'1',
         'price'=>'4000',
         'time_in_force'=>'GoodTillCancel',
+
+        'reduce_only'=>'false',
+        'close_on_trigger'=>'false',
     ]);
     print_r($result);
 }catch (\Exception $e){
@@ -196,6 +199,8 @@ try {
         'qty'=>'1',
         'price'=>'4000',
         'time_in_force'=>'GoodTillCancel',
+        'reduce_only'=>'false',
+        'close_on_trigger'=>'false',
     ]);
     print_r($result);
 }catch (\Exception $e){
