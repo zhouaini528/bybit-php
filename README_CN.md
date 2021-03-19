@@ -20,7 +20,7 @@ QQ交流群：668421169
 
 [Binance](https://github.com/zhouaini528/binance-php) 支持[Websocket](https://github.com/zhouaini528/binance-php/blob/master/README_CN.md#Websocket)
 
-[Kucoin](https://github.com/zhouaini528/Kucoin-php)
+[Kucoin](https://github.com/zhouaini528/kucoin-php)
 
 [Mxc](https://github.com/zhouaini528/mxc-php)
 
@@ -32,13 +32,23 @@ QQ交流群：668421169
 
 [Bittrex](https://github.com/zhouaini528/bittrex-php)
 
-[Gate](https://github.com/zhouaini528/gate-php)
+[Kraken](https://github.com/zhouaini528/kraken-php)
+
+[Gate](https://github.com/zhouaini528/gate-php)   
 
 [Bigone](https://github.com/zhouaini528/bigone-php)   
 
-[Crex24](https://github.com/zhouaini528/crex24-php)
+[Crex24](https://github.com/zhouaini528/crex24-php)   
 
-[Bybit](https://github.com/zhouaini528/bybit-php)
+[Bybit](https://github.com/zhouaini528/bybit-php)  
+
+[Coinbene](https://github.com/zhouaini528/coinbene-php)   
+
+[Bitget](https://github.com/zhouaini528/bitget-php)   
+
+[Poloniex](https://github.com/zhouaini528/poloniex-php)
+
+**如果没有找到你想要的交易所SDK你可以告诉我，我来加入它们。**
 
 #### 安装方式
 ```
