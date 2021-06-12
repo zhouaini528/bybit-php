@@ -44,7 +44,7 @@ class Publics extends Request
      * */
     public function getRecentTradingRecords(array $data=[]){
         $this->type='GET';
-        $this->path='/public/linear/recent-trading-record';
+        $this->path='/public/linear/recent-trading-records';
         $this->data=$data;
         return $this->exec();
     }
