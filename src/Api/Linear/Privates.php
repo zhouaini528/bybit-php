@@ -9,6 +9,8 @@ use Lin\Bybit\Request;
 
 class Privates extends Request
 {
+    //***************Place Active Order
+
     /*
      *POST /private/linear/order/create
      * */
@@ -68,6 +70,8 @@ class Privates extends Request
         $this->data=$data;
         return $this->exec();
     }
+
+    //*******Place Conditional Order
 
     /*
      *POST /private/linear/stop-order/create
@@ -129,6 +133,8 @@ class Privates extends Request
         return $this->exec();
     }
 
+    //***************Position
+
     /*
      *GET /private/linear/position/list
      * */
@@ -181,11 +187,11 @@ class Privates extends Request
 
 
     /*
-     *POST /open-api/position/trading-stop
+     *POST /private/linear/position/trading-stop
      * */
     public function postPositionTradingStop(array $data=[]){
         $this->type='POST';
-        $this->path='/open-api/position/trading-stop';
+        $this->path='/private/linear/position/trading-stop';
         $this->data=$data;
         return $this->exec();
     }
