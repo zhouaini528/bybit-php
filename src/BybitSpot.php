@@ -6,10 +6,10 @@
 namespace Lin\Bybit;
 
 
-use Lin\Bybit\Api\Inverse\Privates;
-use Lin\Bybit\Api\Inverse\Publics;
+use Lin\Bybit\Api\Spot\Privates;
+use Lin\Bybit\Api\Spot\Publics;
 
-class BybitInverse
+class BybitSpot
 {
     protected $key;
     protected $secret;
@@ -33,7 +33,7 @@ class BybitInverse
             'host'=>$this->host,
             'options'=>$this->options,
 
-            'platform'=>'inverse',
+            'platform'=>'spot',
             'version'=>'',
         ];
     }

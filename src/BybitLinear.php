@@ -31,6 +31,9 @@ class BybitLinear
             'secret'=>$this->secret,
             'host'=>$this->host,
             'options'=>$this->options,
+
+            'platform'=>'linear',
+            'version'=>'',
         ];
     }
 

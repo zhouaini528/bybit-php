@@ -32,6 +32,10 @@ class Request
 
     protected $options=[];
 
+    protected $platform='';
+
+    protected $version='';
+
     public function __construct(array $data)
     {
         $this->key=$data['key'] ?? '';
@@ -39,10 +43,13 @@ class Request
         $this->host=$data['host'] ?? 'https://api.bybit.com';
 
         $this->options=$data['options'] ?? [];
+
+        $this->platform=$data['platform'] ?? [];
+        $this->version=$data['version'] ?? [];
     }
 
-    /**
-     * 认证
+    /*
+     *
      * */
     protected function auth(){
         $this->nonce();
@@ -75,6 +82,21 @@ class Request
             foreach ($temp as $k=>$v) if(is_bool($v)) $temp[$k]=$v?'true':'false';
 
             $this->signature = hash_hmac('sha256', urldecode(http_build_query($temp)), $this->secret);
+
+            /*switch ($this->platform) {
+                case 'spot':{
+                    $this->signature = hash_hmac('sha256', urldecode(http_build_query($temp)), $this->secret,false);
+                    echo $this->signature.PHP_EOL;
+                    //$this->signature=base64_encode($this->signature);
+                    //$this->signature=bin2hex($this->signature);
+                    break;
+                }
+                case 'linear':
+                case 'inverse':{
+                    $this->signature = hash_hmac('sha256', urldecode(http_build_query($temp)), $this->secret);
+                    break;
+                }
+            }*/
         }
     }
 
@@ -95,14 +117,6 @@ class Request
 
         $this->options['headers']=$this->headers;
         $this->options['timeout'] = $this->options['timeout'] ?? 60;
-
-        if(isset($this->options['proxy']) && $this->options['proxy']===true) {
-            $this->options['proxy']=[
-                'http'  => 'http://127.0.0.1:12333',
-                'https' => 'http://127.0.0.1:12333',
-                'no'    =>  ['.cn']
-            ];
-        }
     }
 
     /*
@@ -121,8 +135,22 @@ class Request
                 if($v=='false') $temp[$k]=false;
             }
 
-            $this->options['body']=json_encode(array_merge($temp,['sign'=>$this->signature]));
+            switch ($this->platform) {
+                case 'spot':{
+                    $this->options['form_params']=array_merge($temp,['sign'=>$this->signature]);
+                    break;
+                }
+                case 'linear':
+                case 'inverse':{
+                    $this->options['body']=json_encode(array_merge($temp,['sign'=>$this->signature]));
+                    break;
+                }
+            }
         }
+
+//        echo $this->type.PHP_EOL;
+//        echo $url.PHP_EOL;
+//        print_r($this->options);
 
         $response = $client->request($this->type, $url, $this->options);
 
