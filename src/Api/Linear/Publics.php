@@ -80,7 +80,7 @@ class Publics extends Request
     }
 
     /*
-     *GET /public/linear/mark-price-kline
+     *GET /public/linear/index-price-kline
      * */
     public function getIndexPriceKline(array $data=[]){
         $this->type='GET';
