@@ -82,21 +82,6 @@ class Request
             foreach ($temp as $k=>$v) if(is_bool($v)) $temp[$k]=$v?'true':'false';
 
             $this->signature = hash_hmac('sha256', urldecode(http_build_query($temp)), $this->secret);
-
-            /*switch ($this->platform) {
-                case 'spot':{
-                    $this->signature = hash_hmac('sha256', urldecode(http_build_query($temp)), $this->secret,false);
-                    echo $this->signature.PHP_EOL;
-                    //$this->signature=base64_encode($this->signature);
-                    //$this->signature=bin2hex($this->signature);
-                    break;
-                }
-                case 'linear':
-                case 'inverse':{
-                    $this->signature = hash_hmac('sha256', urldecode(http_build_query($temp)), $this->secret);
-                    break;
-                }
-            }*/
         }
     }
 
@@ -104,9 +89,21 @@ class Request
      *
      * */
     protected function headers(){
-        $this->headers=[
-            'Content-Type' => 'application/json',
-        ];
+        switch ($this->platform) {
+            case 'spot':{
+                if($this->type=='POST') {
+                    $this->headers=[
+                        'Content-Type' => 'application/x-www-form-urlencoded',
+                    ];
+                }
+                break;
+            }
+            default:{
+                $this->headers=[
+                    'Content-Type' => 'application/json',
+                ];
+            }
+        }
     }
 
     /*
@@ -137,6 +134,10 @@ class Request
 
             switch ($this->platform) {
                 case 'spot':{
+                    if($this->type=='DELETE') {
+                        $url.= '?'.http_build_query($this->data).($this->signature!=''?'&sign='.$this->signature:'');
+                        break;
+                    }
                     $this->options['form_params']=array_merge($temp,['sign'=>$this->signature]);
                     break;
                 }
