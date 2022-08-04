@@ -31,6 +31,8 @@ class Request
     protected $data=[];
 
     protected $options=[];
+    
+    protected $response_headers = [];
 
     protected $platform='';
 
@@ -105,6 +107,13 @@ class Request
             }
         }
     }
+    
+    /**
+     * Get Response Headers
+     * */
+    public function getResponseHeaders(){
+        return $this->response_headers;
+    }
 
     /*
      *
@@ -154,6 +163,8 @@ class Request
 //        print_r($this->options);
 
         $response = $client->request($this->type, $url, $this->options);
+        
+        $this->response_headers = $response->getHeaders();
 
         return $response->getBody()->getContents();
     }
