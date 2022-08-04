@@ -205,6 +205,16 @@ class Privates extends Request
         $this->data=$data;
         return $this->exec();
     }
+    
+    /*
+     *POST /private/linear/tpsl/switch-mode
+     * */
+    public function postTpslSwitchMode(array $data=[]){
+        $this->type='POST';
+        $this->path='/private/linear/tpsl/switch-mode';
+        $this->data=$data;
+        return $this->exec();
+    }
 
     /*
      *GET /private/linear/trade/execution/list
