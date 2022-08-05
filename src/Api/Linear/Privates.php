@@ -197,6 +197,26 @@ class Privates extends Request
     }
 
     /*
+     *POST /private/linear/position/switch-mode
+     * */
+    public function postPositionSwitchMode(array $data=[]){
+        $this->type='POST';
+        $this->path='/private/linear/position/switch-mode';
+        $this->data=$data;
+        return $this->exec();
+    }
+    
+    /*
+     *POST /private/linear/tpsl/switch-mode
+     * */
+    public function postTpslSwitchMode(array $data=[]){
+        $this->type='POST';
+        $this->path='/private/linear/tpsl/switch-mode';
+        $this->data=$data;
+        return $this->exec();
+    }
+
+    /*
      *GET /private/linear/trade/execution/list
      * */
     public function getTradeExecutionList(array $data=[]){
