@@ -306,4 +306,15 @@ class Privates extends Request
         $this->data=$data;
         return $this->exec();
     }
+
+    /*
+     *GET /v2/private/account/api-key
+     * */
+    public function getApiKeyInfo(array $data=[])
+    {
+        $this->type='GET';
+        $this->path='/v2/private/account/api-key';
+        $this->data=$data;
+        return $this->exec();
+    }
 }
