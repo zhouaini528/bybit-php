@@ -55,29 +55,70 @@ QQ交流群：668421169
 composer require linwj/bybit
 ```
 
-支持更多的请求设置
+
+Support V5 [More](https://github.com/zhouaini528/bybit-php/blob/master/tests/v5)
 ```php
-$bybit=new BybitLinear();
-//or new
-//$bybit=new BybitInverse();
+$bybit=new BybitV5($key,$secret);
 
 //You can set special needs
 $bybit->setOptions([
     //Set the request timeout to 60 seconds by default
     'timeout'=>10,
-    
-    //If you are developing locally and need an agent, you can set this
-    //'proxy'=>true,
-    //More flexible Settings
-    /* 'proxy'=>[
-     'http'  => 'http://127.0.0.1:12333',
-     'https' => 'http://127.0.0.1:12333',
-     'no'    =>  ['.cn']
-     ], */
-    //Close the certificate
-    //'verify'=>false,
+
+    'headers'=>[
+        //X-Referer or Referer - 經紀商用戶專用的頭參數
+        //X-BAPI-RECV-WINDOW 默認值為5000
+        //cdn-request-id
+        'X-BAPI-RECV-WINDOW'=>'6000',
+    ]
 ]);
+
+
+try {
+    $result=$bybit->order()->postCreate([
+        'category'=>'spot',
+        'symbol'=>'BTCUSDT',
+        'side'=>'buy',
+        'orderType'=>'limit',
+        'qty'=>'1',
+        'price'=>'1000',
+
+        //'orderLinkId'=>'xxxxxxxxxxx',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+try {
+    $result=$bybit->order()->getRealTime([
+        'category'=>'spot',
+        'symbol'=>'BTCUSDT',
+
+        'orderId'=>'xxxxxxxxxx',
+        //'orderLinkId'=>'xxxxxxxxxxx',
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
+
+
+try {
+    $result=$bybit->order()->getSpotBorrowCheck([
+        'category'=>'spot',
+        'symbol'=>'BTCUSDT',
+        'side'=>'by'
+    ]);
+    print_r($result);
+}catch (\Exception $e){
+    print_r($e->getMessage());
+}
 ```
+
+[More API V5](https://github.com/zhouaini528/bybit-php/tree/master/src/Api/V5)
+
+
 
 #### USDT永续交易
 
