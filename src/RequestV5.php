@@ -140,9 +140,9 @@ class RequestV5
         if($this->type=='GET') $url.= '?'.http_build_query($this->data);
         else $this->options['body']=json_encode($this->data);
 
-        echo $this->type.PHP_EOL;
-        echo $url.PHP_EOL;
-        print_r($this->options);
+        //echo $this->type.PHP_EOL;
+        //echo $url.PHP_EOL;
+        //print_r($this->options);
         //die;
 
         $response = $client->request($this->type, $url, $this->options);
