@@ -84,7 +84,7 @@ class RequestV5
      * */
     protected function signature(){
         if(!empty($this->key) && !empty($this->secret)){
-            if(array_key_exists('X-BAPI-RECV-WINDOW',$this->options['headers'])){
+            if(isset($this->options['headers']) && array_key_exists('X-BAPI-RECV-WINDOW',$this->options['headers'])){
                 $this->recv_window=$this->options['headers']['X-BAPI-RECV-WINDOW'];
                 unset($this->options['headers']['X-BAPI-RECV-WINDOW']);
             }
